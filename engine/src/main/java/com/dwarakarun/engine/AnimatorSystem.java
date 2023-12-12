@@ -41,6 +41,7 @@ public class AnimatorSystem extends GameSystem{
   @Override
   public void update() {
     Iterator iter = sc.iterator();
+	float speed = 1.0f;
     while(iter.hasNext()) {
       Map.Entry entry = (Map.Entry)iter.next();
       String name = (String)entry.getKey();
@@ -48,19 +49,19 @@ public class AnimatorSystem extends GameSystem{
       Transform t = tc.get(name);
       if(name=="shinobiSprite") {
         changePos(ks.getXMove(name),ks.getYMove(name),t);
-        if(t.getX()>=612f) {
-          System.out.println("back:"+tc.get("background_for").getX());
-          System.out.println("back_dup:"+tc.get("background_for_dup").getX());
-          changePos(-2f,0f,t);
-          if(tc.get("background_for").getX()>-1980f || tc.get("background_for_dup").getX()>-1980f) {
-            changePos(-2f,0f,tc.get("background_for"));
-            changePos(-2f,0f,tc.get("background_for_dup"));
+//        if(t.getX()>=612f || true) {
+//          System.out.println("back:"+tc.get("background_for").getX());
+//          System.out.println("back_dup:"+tc.get("background_for_dup").getX());
+//          changePos(-2f,0f,t);
+          if(tc.get("background_for").getX()>-1986f || tc.get("background_for_dup").getX()>-1986f) {
+            changePos(-speed,0f,tc.get("background_for"));
+            changePos(-speed,0f,tc.get("background_for_dup"));
           } else if(focus == 1) {
-            changePos(-2f,0f,tc.get("background_for"));
+            changePos(-speed,0f,tc.get("background_for"));
           }else {
-            changePos(-2f,0f,tc.get("background_for_dup"));
+            changePos(-speed,0f,tc.get("background_for_dup"));
           }
-        }
+//        }
       }
       //-1980
       if(name=="background_for" && (t.getX()<=-786f && t.getX()>=-800f)) {

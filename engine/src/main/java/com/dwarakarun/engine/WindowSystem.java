@@ -59,7 +59,7 @@ public class WindowSystem extends GameSystem {
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
 		width = 1200;
-		height = 780;
+		height = 720;
 
 		handle = glfwCreateWindow(width, height, "Dwaraka Run", NULL, NULL);
 		if (handle == NULL) {

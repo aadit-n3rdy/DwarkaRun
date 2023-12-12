@@ -51,12 +51,19 @@ public class Engine {
 		if (visited.contains(sys)) {
 			return;
 		}
+		System.out.println("Inserting sys " + sys);
+		try {
 		for (Class dep: deps) {
 			if (!visited.contains(dep)) {
 				System.out.println("Inserting dependency " + sys);
 				insertWithDeps(dep, getSystem(dep).getDependencies(), visited);
 				visited.add(dep);
 			}
+		}
+		} catch (Exception e) {
+			depsort.push(sys);
+			visited.add(sys);
+			return;
 		}
 		depsort.push(sys);
 		visited.add(sys);
