@@ -74,9 +74,9 @@ public class Game {
 		Collider ob_c;
 		Transform ob_t;
 		for (int i = 0; i < 3; i++) {
-			ob_s = new Sprite("../assets/obstacle.png");
+			ob_s = new Sprite("../assets/shuriken.png");
 			ob_s.load();
-			ob_s.scale(0.2f);
+			ob_s.scale(0.03f);
 			ob_c = new Collider(130, 80);
 			ob_t = new Transform(400 * i, 0, 1);
 			sc.set("obstacle" + i, ob_s);
