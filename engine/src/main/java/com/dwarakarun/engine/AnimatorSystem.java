@@ -17,7 +17,7 @@ import static org.lwjgl.system.MemoryUtil.*;
 import static org.lwjgl.stb.STBImage.*;
 
 
-public class AnimatorSystem extends GameSystem{
+public class AnimatorSystem extends GameSystem implements Runnable {
   public AnimatorSystem(Engine eng) {
     super(eng);
     deps = new Class[] {};
@@ -34,6 +34,17 @@ public class AnimatorSystem extends GameSystem{
     System.out.println("AS init");
     sc = eng.getComponent(SpriteComponent.class);
     tc = eng.getComponent(TransformComponent.class);
+  }
+
+  @Override
+  public void run() {
+	  while (true) {
+		  update();
+		  try {
+			  Thread.sleep(5);
+		  } catch(Exception e) {
+		  }
+	  }
   }
 
   int focus=1; //focus = 1 means background in focus; 
@@ -65,12 +76,12 @@ public class AnimatorSystem extends GameSystem{
       }
       //-1980
       if(name=="background_for" && (t.getX()<=-786f && t.getX()>=-800f)) {
-        System.out.println("Looping second background");
+//        System.out.println("Looping second background");
         tc.get("background_for_dup").setX(1100f);
         focus = 0;
       }
       if(name=="background_for_dup" && (t.getX()<=-786f && t.getX()>=-800f)) {
-        System.out.println("Looping first background");
+//        System.out.println("Looping first background");
         tc.get("background_for").setX(1100f);
         focus = 1;
       }

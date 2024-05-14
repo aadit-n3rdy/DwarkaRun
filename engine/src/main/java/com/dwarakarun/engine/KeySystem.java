@@ -36,7 +36,7 @@ public class KeySystem {
     //83 = s
     //68 = d
     if(keycode == 65) {
-      System.out.println("Move speed"+move_speed);
+//      System.out.println("Move speed"+move_speed);
       pos[0] = -move_speed;
     } else if(keycode == 87) {
       pos[1]= -move_speed;

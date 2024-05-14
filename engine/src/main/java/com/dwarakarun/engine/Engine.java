@@ -107,11 +107,24 @@ public class Engine {
 
 
 	public void run() {
+		Iterator<HashMap.Entry<Class, GameSystem>> sys= systems.entrySet().iterator();
+		GameSystem cur;
+		while (sys.hasNext()) {
+			cur = sys.next().getValue();
+			if (cur instanceof Runnable) {
+				Thread t = new Thread((Runnable)cur);
+				t.start();
+			}
+//			sys.next().getValue().update();
+		}
 		while (!shouldEnd) {
 			ws.clear();
-			Iterator<HashMap.Entry<Class, GameSystem>> sys= systems.entrySet().iterator();
+			sys= systems.entrySet().iterator();
 			while (sys.hasNext()) {
-				sys.next().getValue().update();
+				cur = sys.next().getValue();
+				if (!(cur instanceof Runnable)) {
+					cur.update();
+				}
 			}
 			ws.swapBuffers();
 			ws.pollEvents();
