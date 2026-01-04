@@ -31,7 +31,7 @@ public class ObstacleSystem extends GameSystem {
 			if (coll.contains("shinobiSprite")) {
 				System.out.println("Game over");
 				try {
-					Thread.sleep(10000);
+					Thread.sleep(500);
 				} catch (Exception e) {
 					System.out.println("Interrupted");
 				}

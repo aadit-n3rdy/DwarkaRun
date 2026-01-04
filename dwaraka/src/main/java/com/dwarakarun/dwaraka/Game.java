@@ -16,8 +16,12 @@ public class Game {
 
 		ColliderComponent cc = new ColliderComponent();
 		e.addComponent(cc);
+        
+        ScriptsComponent scpt = new ScriptsComponent();
+        e.addComponent(scpt);
 
 		e.addSystem(new WindowSystem(e));
+        e.addSystem(new ScriptingSystem(e));
 		e.addSystem(new ColliderSystem(e));
 		e.addSystem(new RendererSystem(e));
 		e.addSystem(new AnimatorSystem(e));
@@ -70,6 +74,11 @@ public class Game {
 		sc.set("background_for",s3);
 		sc.set("background_for_dup",s3_dup);
 
+        // Attach Behaviors
+        scpt.set("shinobiSprite", new PlayerBehavior());
+        scpt.set("background_for", new BackgroundBehavior("background_for_dup"));
+        scpt.set("background_for_dup", new BackgroundBehavior("background_for"));
+
 		Sprite ob_s;
 		Collider ob_c;
 		Transform ob_t;
@@ -78,7 +87,7 @@ public class Game {
 			ob_s.load();
 			ob_s.scale(0.5f);
 			ob_c = new Collider(120, 150);
-			ob_t = new Transform(400 * i, 0, 1);
+			ob_t = new Transform(800 + 500 * i, 0, 1);
 			sc.set("obstacle" + i, ob_s);
 			cc.set("obstacle" + i, ob_c);
 			tc.set("obstacle" + i, ob_t);

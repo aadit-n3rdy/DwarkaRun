@@ -51,7 +51,7 @@ public class KeySystem {
     back[0] = -2f;
   }
 
-  float getXMove(String name) {
+  public float getXMove(String name) {
     if(name=="shinobiSprite") {
       return pos[0];
     } else {
@@ -59,7 +59,7 @@ public class KeySystem {
     }
   }
 
-  float getYMove(String name) {
+  public float getYMove(String name) {
     if(name=="shinobiSprite") {
       return pos[1];
     } else {

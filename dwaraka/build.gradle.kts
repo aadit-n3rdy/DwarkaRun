@@ -18,13 +18,16 @@ dependencies {
 }
 
 java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
-    }
+//    toolchain {
+//        languageVersion.set(JavaLanguageVersion.of(21))
+//    }
 }
 
 application {
     mainClass.set("com.dwarakarun.dwaraka.Game")
+    if (System.getProperty("os.name").lowercase().contains("mac")) {
+        applicationDefaultJvmArgs = listOf("-XstartOnFirstThread")
+    }
 }
 
 tasks.named<Test>("test") {
