@@ -1,0 +1,16 @@
+<Configuration status="error" name="engine" packages="">
+    <Appenders>
+        <Console name="stdout" target="SYSTEM_OUT" immediateFlush="true">
+            <!-- {time} [level] marker : message-->
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %highlight{%-5p} [%t] %style{%marker}{cyan} - %m%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="ENGINE" level="debug" additivity="false">
+            <AppenderRef ref="stdout"/>
+        </Logger>
+        <Root level="info">
+            <AppenderRef ref="stdout"/>
+        </Root>
+    </Loggers>
+</Configuration>

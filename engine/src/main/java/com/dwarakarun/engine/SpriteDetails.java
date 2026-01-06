@@ -1,5 +1,9 @@
 package com.dwarakarun.engine;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
@@ -18,8 +22,10 @@ import static org.lwjgl.system.MemoryUtil.*;
 import static org.lwjgl.stb.STBImage.*;
 
 public class SpriteDetails {
+    private static final Logger logger = LogManager.getLogger("ENGINE");
+    private static final Marker marker = MarkerManager.getMarker("SpriteDetails");
   public SpriteDetails() {
-    System.out.println("SpriteDetails Constructor Done");
+    logger.info(marker,"Constructor Done");
   }
   
   //no_of_sprites/curr_sprite/sprite_time/time_since_curr_sprite_last_changed

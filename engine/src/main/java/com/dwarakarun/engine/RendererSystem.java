@@ -1,5 +1,9 @@
 package com.dwarakarun.engine;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
@@ -31,10 +35,12 @@ class RenderData {
 
 public class RendererSystem extends GameSystem {
   static int sprite_count;
+  private static final Marker marker = MarkerManager.getMarker("RenderSystem");
+
 	public RendererSystem(Engine eng) {
 		super(eng);
 		deps = new Class[] {WindowSystem.class};
-		System.out.println("RS Constructor done");
+        eng.logger.info(marker,"Constructor done");
 	}
 
 	SpriteComponent spriteComponent;
@@ -45,7 +51,7 @@ public class RendererSystem extends GameSystem {
 
 	@Override
 	public void init() {
-		System.out.println("RS init");
+        eng.logger.debug(marker,"init");
 
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glLoadIdentity();
@@ -59,7 +65,7 @@ public class RendererSystem extends GameSystem {
 		windowSystem = eng.getSystem(WindowSystem.class);
     as = eng.getSystem(AnimatorSystem.class); 
 		transformComponent = eng.getComponent(TransformComponent.class);
-		System.out.println(transformComponent);
+        eng.logger.debug(marker,transformComponent);
 	}
 
 	protected void render(Sprite sp,int ColSprites, int currSprite, 
@@ -91,10 +97,10 @@ public class RendererSystem extends GameSystem {
 		glVertex2f(0, height);
 
 		glTexCoord2f((sprite_tex_width*(currSprite+1)), 1-pt3);
-		glVertex2f(width/ColSprites, height);
+		glVertex2f((float) width /ColSprites, height);
 
 		glTexCoord2f((sprite_tex_width*(currSprite+1)), 1-pt1);
-		glVertex2f(width/ColSprites, 0);
+		glVertex2f((float) width /ColSprites, 0);
 
 		glEnd();
 
@@ -131,7 +137,7 @@ public class RendererSystem extends GameSystem {
 			try {
 				render(sp, sd.getSpriteQuant(name), sd.getCurrSprite(name), tr.getX(), tr.getY());
 			} catch (Exception e) {
-				System.out.println("ERROR: Could not render sprite, missing transform component: " + name);
+                eng.logger.error(marker,"Could not render sprite, missing transform component: " + name);
 			}
 		}
 		glPopMatrix();

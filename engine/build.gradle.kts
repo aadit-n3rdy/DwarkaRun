@@ -43,6 +43,11 @@ dependencies {
 	implementation("org.lwjgl", "lwjgl-openal")
 	implementation("org.lwjgl", "lwjgl-opengl")
 	implementation("org.lwjgl", "lwjgl-stb")
+
+    // logging using log4j
+    implementation("org.apache.logging.log4j","log4j-core","2.12.4")
+    api("org.apache.logging.log4j","log4j-api","2.12.4")
+
 	runtimeOnly("org.lwjgl", "lwjgl", classifier = lwjglNatives)
 	runtimeOnly("org.lwjgl", "lwjgl-assimp", classifier = lwjglNatives)
 	runtimeOnly("org.lwjgl", "lwjgl-freetype", classifier = lwjglNatives)

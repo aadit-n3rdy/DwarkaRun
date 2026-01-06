@@ -1,5 +1,9 @@
 package com.dwarakarun.engine;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
@@ -23,9 +27,10 @@ import javax.imageio.*;
 
 public class KeySystem {
   Transform ts;
-  
+  private static final Logger logger = LogManager.getLogger("ENGINE");
+  private static final Marker marker = MarkerManager.getMarker("KeySystem");
   public KeySystem() {
-    System.out.println("Keysystem Constructor Done");
+    logger.info(marker,"Constructor Done");
   }
 
   static float pos[] = {0f,0f};

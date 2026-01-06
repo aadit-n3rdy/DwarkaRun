@@ -1,5 +1,8 @@
 package com.dwarakarun.engine;
 
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
+
 import java.util.*;
 
 public class ObstacleSystem extends GameSystem {
@@ -8,6 +11,7 @@ public class ObstacleSystem extends GameSystem {
 	Transform obst;
 	ColliderSystem cs;
 	Random rand;
+    private static final Marker marker = MarkerManager.getMarker("ObstacleSystem");
 	public ObstacleSystem(Engine eng) {
 		super(eng);
 		this.deps = new Class[] { ColliderSystem.class };
@@ -29,11 +33,11 @@ public class ObstacleSystem extends GameSystem {
 		while (iter.hasNext()) {
 			coll = iter.next();
 			if (coll.contains("shinobiSprite")) {
-				System.out.println("Game over");
+				logger.info(marker,"Game over");
 				try {
 					Thread.sleep(10000);
 				} catch (Exception e) {
-					System.out.println("Interrupted");
+					logger.error(marker,"Interrupted");
 				}
 				eng.end();
 			}

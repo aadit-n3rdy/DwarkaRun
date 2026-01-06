@@ -1,5 +1,7 @@
 package com.dwarakarun.engine;
 
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
@@ -18,10 +20,11 @@ import static org.lwjgl.stb.STBImage.*;
 
 
 public class AnimatorSystem extends GameSystem implements Runnable {
+    private static final Marker marker = MarkerManager.getMarker("AnimatorSystem");
   public AnimatorSystem(Engine eng) {
     super(eng);
     deps = new Class[] {};
-    System.out.println("AS Constructor done");
+    logger.info(marker,"Constructor done");
   }
 
   SpriteDetails sd = new SpriteDetails();
@@ -31,7 +34,7 @@ public class AnimatorSystem extends GameSystem implements Runnable {
 
   @Override
   public void init() {
-    System.out.println("AS init");
+    logger.info(marker,"init");
     sc = eng.getComponent(SpriteComponent.class);
     tc = eng.getComponent(TransformComponent.class);
   }

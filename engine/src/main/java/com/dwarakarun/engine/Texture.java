@@ -1,5 +1,9 @@
 package com.dwarakarun.engine;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 import org.lwjgl.*;
 import org.lwjgl.opengl.*;
 import org.lwjgl.system.*;
@@ -15,6 +19,9 @@ import static org.lwjgl.stb.STBImage.*;
 public class Texture {
 	private int handle;
 	private int width, height;
+    private static final Logger logger = LogManager.getLogger("ENGINE");
+    private static final Marker marker = MarkerManager.getMarker("Texture");
+
 	public Texture() {
 		handle = glGenTextures();
 	}
@@ -38,7 +45,7 @@ public class Texture {
 
             width = w.get();
             height = h.get();
-			System.out.format("Loaded texture file %s\nWidth: %d Height: %d Channels: %d\n",
+			logger.debug(marker,"Loaded texture file {}\nWidth: {} Height: {} Channels: {}\n",
 					filePath, width, height, comp.get());
 		}
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);

@@ -1,5 +1,7 @@
 package com.dwarakarun.engine;
 
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
@@ -28,11 +30,11 @@ public class WindowSystem extends GameSystem {
 	private int height;
 	Texture texture;
   AnimatorSystem as;
-
+    private static final Marker marker = MarkerManager.getMarker("WindowSystem");
 	private void handleErrors() {
 		int err = glGetError();
 		while (err != GL_NO_ERROR) {
-			System.out.format("ERROR: %d\n", err);
+            logger.error(marker,"OpenGl error : {}",err);
 			err = glGetError();
 		}
 	}
@@ -40,7 +42,7 @@ public class WindowSystem extends GameSystem {
 	public WindowSystem(Engine eng) {
 		super(eng);
 		deps = new Class[] {};
-		System.out.println("WS Constructor done");
+		logger.info(marker,"Constructor done");
 	}
 
 	public int getWidth() {
@@ -52,7 +54,7 @@ public class WindowSystem extends GameSystem {
 
 	@Override
 	public void init() {
-		System.out.println("WS init");
+		logger.info(marker,"init");
 		if (!glfwInit()) {
 			throw new IllegalStateException("Unable to init GLFW");
 		}
@@ -63,7 +65,7 @@ public class WindowSystem extends GameSystem {
 
 		handle = glfwCreateWindow(width, height, "Dwaraka Run", NULL, NULL);
 		if (handle == NULL) {
-			System.out.println("NULL window");
+			logger.info(marker,"NULL window");
 		}
 
     KeySystem ks = new KeySystem();

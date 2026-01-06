@@ -1,5 +1,8 @@
 package com.dwarakarun.engine;
 
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
+
 import java.lang.*;
 import java.util.*;
 
@@ -7,13 +10,14 @@ public class ColliderSystem extends GameSystem {
 	protected List<Collision> collisions;
 	protected TransformComponent tc;
 	protected ColliderComponent cc;
+    private static final Marker marker = MarkerManager.getMarker("ColliderSystem");
 
 	public ColliderSystem(Engine eng) {
 		super(eng);
 		this.eng = eng;
 		this.deps = new Class[] {};
 		collisions = new ArrayList<Collision>();
-		System.out.println("CS constructor");
+        logger.info(marker,"Constructor done");
 	}
 
 	@Override
@@ -63,7 +67,7 @@ public class ColliderSystem extends GameSystem {
 				t2 = tc.get(j.getKey());
 				if (isOverlapping(t1, c1, t2, c2)) {
 					collisions.add(new Collision(n1, n2));
-					System.out.println("Collision: " + n1 + " " + n2);
+                    logger.debug(marker,"Collision: " + n1 + " " + n2);
 				}
 			}
 		}
