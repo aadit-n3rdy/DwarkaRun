@@ -30,12 +30,13 @@ public class AnimatorSystem extends GameSystem implements Runnable {
   SpriteDetails sd = new SpriteDetails();
   SpriteComponent sc;
   TransformComponent tc;
-  KeySystem ks = new KeySystem();
+  PlayerComponent pc;
 
   @Override
   public void init() {
     logger.info(marker,"init");
     sc = eng.getComponent(SpriteComponent.class);
+    pc = eng.getComponent(PlayerComponent.class);
     tc = eng.getComponent(TransformComponent.class);
   }
 
@@ -61,8 +62,9 @@ public class AnimatorSystem extends GameSystem implements Runnable {
       String name = (String)entry.getKey();
       Sprite sprite = (Sprite)entry.getValue();
       Transform t = tc.get(name);
-      if(name=="shinobiSprite") {
-        changePos(ks.getXMove(name),ks.getYMove(name),t);
+      InputHandlerSystem iHs= eng.getSystem(InputHandlerSystem.class);
+      if(name.equals(pc.spriteName)) {
+        changePos(iHs.getXMove(),iHs.getYMove(),t);
 //        if(t.getX()>=612f || true) {
 //          System.out.println("back:"+tc.get("background_for").getX());
 //          System.out.println("back_dup:"+tc.get("background_for_dup").getX());

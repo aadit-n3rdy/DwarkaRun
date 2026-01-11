@@ -29,7 +29,11 @@ public class Engine {
 	public <T extends GameSystem> void addSystem(T sys) {
 		String name = sys.getClass().getCanonicalName();
 		logger.debug(marker,"Registering system " + name);
-		systems.put(sys.getClass(), sys);
+        // to handle inheritance
+        if (GameSystem.class == sys.getClass().getSuperclass())
+            systems.put(sys.getClass(), sys);
+        else
+            systems.put(sys.getClass().getSuperclass(), sys);
 	}
 
 	public <T> void addComponent (Component<T> c) {

@@ -17,6 +17,9 @@ public class Game {
 		ColliderComponent cc = new ColliderComponent();
 		e.addComponent(cc);
 
+        PlayerComponent playerComponent = new PlayerComponent("shinobiSprite");
+        e.addComponent(playerComponent);
+        e.addSystem(new DwarakaInputHandlerSystem(e));
 		e.addSystem(new WindowSystem(e));
 		e.addSystem(new ColliderSystem(e));
 		e.addSystem(new RendererSystem(e));

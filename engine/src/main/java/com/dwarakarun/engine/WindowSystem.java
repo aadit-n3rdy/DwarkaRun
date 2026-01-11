@@ -23,97 +23,108 @@ import java.awt.image.*;
 import java.io.*;
 import javax.imageio.*;
 
-
 public class WindowSystem extends GameSystem {
-	private long handle;
-	private int width;
-	private int height;
-	Texture texture;
-  AnimatorSystem as;
+    private long handle;
+    private int width;
+    private int height;
+    Texture texture;
+    AnimatorSystem as;
     private static final Marker marker = MarkerManager.getMarker("WindowSystem");
-	private void handleErrors() {
-		int err = glGetError();
-		while (err != GL_NO_ERROR) {
-            logger.error(marker,"OpenGl error : {}",err);
-			err = glGetError();
-		}
-	}
 
-	public WindowSystem(Engine eng) {
-		super(eng);
-		deps = new Class[] {};
-		logger.info(marker,"Constructor done");
-	}
-
-	public int getWidth() {
-		return width;
-	}
-	public int getHeight() {
-		return height;
-	}
-
-	@Override
-	public void init() {
-		logger.info(marker,"init");
-		if (!glfwInit()) {
-			throw new IllegalStateException("Unable to init GLFW");
-		}
-		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
-
-		width = 1200;
-		height = 720;
-
-		handle = glfwCreateWindow(width, height, "Dwaraka Run", NULL, NULL);
-		if (handle == NULL) {
-			logger.info(marker,"NULL window");
-		}
-
-    KeySystem ks = new KeySystem();
-    as = eng.getSystem(AnimatorSystem.class);
-    glfwSetKeyCallback(handle, (handle, key, scancode, action, mods) -> {
-      if(key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE ) {
-        glfwSetWindowShouldClose(handle, true);
-      } else {
-        if( (action == GLFW_REPEAT || action == GLFW_PRESS) && (key == 65 || key == 68 || key == 87 || key == 83))
-          ks.moveSprite(key,2f);
-
-        if(action == GLFW_RELEASE && (key == 65 || key == 68 || key == 87 || key == 83)) {
-          ks.moveSprite(key,0f);
+    private void handleErrors() {
+        int err = glGetError();
+        while (err != GL_NO_ERROR) {
+            logger.error(marker, "OpenGl error : {}", err);
+            err = glGetError();
         }
-      }
-    });
+    }
 
-		glfwMakeContextCurrent(handle);
-		glfwSwapInterval(1);
-		glfwShowWindow(handle);
+    public WindowSystem(Engine eng) {
+        super(eng);
+        deps = new Class[] {};
+        logger.info(marker, "Constructor done");
+    }
 
-		GL.createCapabilities();
+    public int getWidth() {
+        return width;
+    }
 
-}
+    public int getHeight() {
+        return height;
+    }
 
-	public void clear() {
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	}
+    @Override
+    public void init() {
+        logger.info(marker, "init");
+        if (!glfwInit()) {
+            throw new IllegalStateException("Unable to init GLFW");
+        }
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
-	public void swapBuffers() {
-		glfwSwapBuffers(handle);
-	}
+        width = 1200;
+        height = 720;
 
-	public void pollEvents() {
-		glfwPollEvents();
-	}
+        handle = glfwCreateWindow(width, height, "Dwaraka Run", NULL, NULL);
+        if (handle == NULL) {
+            logger.info(marker, "NULL window");
+        }
+        InputHandlerSystem inputsys = eng.getSystem(InputHandlerSystem.class) ;
+        glfwSetKeyCallback(handle,(handle, key, scancode, action, mods)->{
+            if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
+                glfwSetWindowShouldClose(handle, true);
+            if(inputsys != null)
+                inputsys.handleKeyInput(key,scancode,action,mods);
 
-	@Override
-	public void end() {
-		glfwFreeCallbacks(handle);
-		glfwDestroyWindow(handle);
-		glfwTerminate();
-	}
+        });
+        /*
+        KeySystem ks = new KeySystem();
+        as = eng.getSystem(AnimatorSystem.class);
+        glfwSetKeyCallback(handle, (handle, key, scancode, action, mods) -> {
+            if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
+                glfwSetWindowShouldClose(handle, true);
+            } else {
+                if ((action == GLFW_REPEAT || action == GLFW_PRESS)
+                        && (key == 65 || key == 68 || key == 87 || key == 83))
+                    ks.moveSprite(key, 2f);
 
-	@Override
-	public void update() {
-		if (glfwWindowShouldClose(handle)) {
-			eng.end();
-		}
-	}
+                if (action == GLFW_RELEASE && (key == 65 || key == 68 || key == 87 || key == 83)) {
+                    ks.moveSprite(key, 0f);
+                }
+            }
+        });
+        */
+
+        glfwMakeContextCurrent(handle);
+        glfwSwapInterval(1);
+        glfwShowWindow(handle);
+
+        GL.createCapabilities();
+
+    }
+
+    public void clear() {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
+
+    public void swapBuffers() {
+        glfwSwapBuffers(handle);
+    }
+
+    public void pollEvents() {
+        glfwPollEvents();
+    }
+
+    @Override
+    public void end() {
+        glfwFreeCallbacks(handle);
+        glfwDestroyWindow(handle);
+        glfwTerminate();
+    }
+
+    @Override
+    public void update() {
+        if (glfwWindowShouldClose(handle)) {
+            eng.end();
+        }
+    }
 }
